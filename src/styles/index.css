@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   RECIPET — Global Design System
+   ============================================ */
+
+@layer base {
+  :root {
+    --color-tomato: #E4573D;
+    --color-tomato-dark: #C9442A;
+    --color-cream: #FFF9F2;
+    --color-charcoal: #24211F;
+    --color-warm-gray: #6F6862;
+    --color-golden: #D99A3D;
+    --color-border: #E9E1D8;
+    --color-surface: #FFFFFF;
+
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    --radius: 0.375rem;
+    --shadow-card: 0 1px 3px rgba(36, 33, 31, 0.08), 0 1px 2px rgba(36, 33, 31, 0.06);
+    --shadow-elevated: 0 4px 12px rgba(36, 33, 31, 0.1), 0 2px 6px rgba(36, 33, 31, 0.06);
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
+    font-size: 1rem;
+    line-height: 1.625;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Accessible focus styles */
+  :focus-visible {
+    outline: 2px solid var(--color-tomato);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Headings — editorial serif */
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    color: var(--color-charcoal);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+  h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+  h3 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+  h4 { font-size: 1.125rem; }
+
+  p {
+    color: var(--color-charcoal);
+    line-height: 1.75;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: rgba(228, 87, 61, 0.15);
+    color: var(--color-charcoal);
+  }
+}
+
+@layer components {
+  /* ── Recipe Card ── */
+  .recipe-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .recipe-card:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+
+  .recipe-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .recipe-card:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ── Category Badge ── */
+  .category-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-tomato);
+    line-height: 1;
+  }
+
+  /* ── Section Container ── */
+  .section-container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .section-container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  /* ── Section Heading ── */
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-charcoal);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* ── Skeleton loader ── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #EDE7DF 25%,
+      #E3DCD5 50%,
+      #EDE7DF 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 0.25rem;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── Primary Button ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--color-tomato);
+    color: white;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-tomato-dark);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* ── Secondary Button ── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.6875rem 1.5rem;
+    border-radius: 0.375rem;
+    border: 1.5px solid var(--color-border);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-charcoal);
+    background-color: rgba(36, 33, 31, 0.03);
+  }
+
+  /* ── Metadata text ── */
+  .meta-text {
+    font-size: 0.875rem;
+    color: var(--color-warm-gray);
+    font-family: var(--font-sans);
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    height: 1px;
+    background-color: var(--color-border);
+    width: 100%;
+  }
+
+  /* ── Admin sidebar nav item ── */
+  .admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-warm-gray);
+    transition: background-color 0.15s ease, color 0.15s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .admin-nav-item:hover {
+    background-color: #F5EFE8;
+    color: var(--color-charcoal);
+  }
+
+  .admin-nav-item.active {
+    background-color: #FEF0EC;
+    color: var(--color-tomato);
+    font-weight: 600;
+  }
+
+  /* ── Search input ── */
+  .search-input {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-charcoal);
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-warm-gray);
+  }
+
+  /* ── Recipe info box ── */
+  .recipe-info-box {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  /* ── Tag chip ── */
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    background: #F5EFE8;
+    color: var(--color-warm-gray);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .text-charcoal { color: var(--color-charcoal); }
+  .text-warm-gray { color: var(--color-warm-gray); }
+  .text-tomato { color: var(--color-tomato); }
+  .text-golden { color: var(--color-golden); }
+  .bg-cream { background-color: var(--color-cream); }
+  .bg-surface { background-color: var(--color-surface); }
+  .border-warm { border-color: var(--color-border); }
+  .font-serif { font-family: var(--font-serif); }
+  .font-sans { font-family: var(--font-sans); }
+
+  /* Aspect ratios for images */
+  .aspect-recipe-card { aspect-ratio: 4 / 3; }
+  .aspect-recipe-hero { aspect-ratio: 16 / 9; }
+  .aspect-category { aspect-ratio: 3 / 2; }
+
+  /* Fade in animation */
+  .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
+
+  /* Line clamp utilities */
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+}
